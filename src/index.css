@@ -1,0 +1,593 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 13% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 9%;
+    --primary: 221 55% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 13% 9%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 220 13% 9%;
+    --destructive: 0 65% 58%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 221 55% 50%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 220 10% 4%;
+    --foreground: 0 0% 98%;
+    --card: 220 10% 8%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 11%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 221 50% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 60% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 221 50% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background transition-all duration-200 ease-out;
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Slim, near-invisible scrollbar for sidebar */
+  .sidebar-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .sidebar-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .sidebar-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.2);
+    border-radius: 2px;
+    transition: background 0.2s ease;
+  }
+
+  .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.4);
+  }
+
+  /* Firefox scrollbar */
+  .sidebar-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.2) transparent;
+  }
+
+  .glassmorphism {
+    @apply bg-card/60 backdrop-blur-md border border-border/50 shadow-lg;
+  }
+
+  .glassmorphism-primary {
+    @apply bg-primary/10 backdrop-blur-md border border-primary/20 shadow-lg;
+  }
+
+  .premium-shadow {
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.04),
+      0 4px 6px -2px rgba(0, 0, 0, 0.02),
+      0 0 0 1px rgba(0, 0, 0, 0.02);
+  }
+
+  .premium-card {
+    @apply glassmorphism rounded-2xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-primary/30;
+  }
+
+  /* Custom scrollbar */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/30 transition-colors;
+  }
+
+  @keyframes breathing {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes gradient-border-chase {
+    0% {
+      background: conic-gradient(
+        from 0deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    5% {
+      background: conic-gradient(
+        from 18deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    10% {
+      background: conic-gradient(
+        from 36deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    15% {
+      background: conic-gradient(
+        from 54deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    20% {
+      background: conic-gradient(
+        from 72deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    25% {
+      background: conic-gradient(
+        from 90deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    30% {
+      background: conic-gradient(
+        from 108deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    35% {
+      background: conic-gradient(
+        from 126deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    40% {
+      background: conic-gradient(
+        from 144deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    45% {
+      background: conic-gradient(
+        from 162deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    50% {
+      background: conic-gradient(
+        from 180deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    55% {
+      background: conic-gradient(
+        from 198deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    60% {
+      background: conic-gradient(
+        from 216deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    65% {
+      background: conic-gradient(
+        from 234deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    70% {
+      background: conic-gradient(
+        from 252deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    75% {
+      background: conic-gradient(
+        from 270deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    80% {
+      background: conic-gradient(
+        from 288deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    85% {
+      background: conic-gradient(
+        from 306deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    90% {
+      background: conic-gradient(
+        from 324deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    95% {
+      background: conic-gradient(
+        from 342deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+    100% {
+      background: conic-gradient(
+        from 360deg,
+        #ff8c00,
+        #ff6600,
+        #ff8c00,
+        transparent 50%,
+        transparent
+      );
+    }
+  }
+}
+
+/* Print Styles for Flight Ticket */
+@media print {
+  /* Reset page margins and set up print page */
+  @page {
+    margin: 0.4in 0.5in;
+    size: A4;
+    marks: none;
+  }
+
+  /* Hide everything except ticket */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Show ticket when printing */
+  .flight-ticket,
+  .flight-ticket * {
+    visibility: visible;
+  }
+
+  .flight-ticket {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Hide regular view when printing */
+  .print\\:hidden {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Enhanced ticket section styling */
+  .ticket-section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-after: auto;
+    margin-bottom: 0.5in;
+    background: white !important;
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+  }
+
+  /* Ensure each ticket starts on a new page (except first) */
+  .flight-ticket .ticket-section:not(:first-child) {
+    page-break-before: always;
+    break-before: page;
+    margin-top: 0.5in;
+  }
+
+  /* Prevent page breaks in critical sections */
+  .ticket-section > div:first-child {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* Enhanced print-ticket styling */
+  .print-ticket {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 0.5in;
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  /* Optimize header for print */
+  .print-ticket > div:first-child {
+    page-break-after: avoid;
+    break-after: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  /* Ensure stub section doesn't break */
+  .print-ticket > div:last-child {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Hide non-essential elements */
+  .flight-ticket button,
+  .flight-ticket .print\\:hidden,
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Optimize colors for printing - preserve important colors */
+  .flight-ticket {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  /* Ensure primary colors print correctly */
+  .flight-ticket .bg-primary,
+  .flight-ticket .text-primary {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  /* Enhanced barcode visibility */
+  .flight-ticket svg {
+    display: block !important;
+    visibility: visible !important;
+    max-width: 100% !important;
+    height: auto !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Ensure barcode container prints properly */
+  .flight-ticket [class*="barcode"],
+  .flight-ticket [class*="Barcode"] {
+    background: white !important;
+    padding: 8px !important;
+    border: 1px solid #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Optimize text for print */
+  .flight-ticket {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+
+  .flight-ticket h1,
+  .flight-ticket h2,
+  .flight-ticket h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* Ensure airport codes are prominent */
+  .flight-ticket p[class*="text-5xl"],
+  .flight-ticket p[class*="text-6xl"] {
+    font-size: 48pt !important;
+    font-weight: 900 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Optimize detail boxes */
+  .flight-ticket [class*="DetailBox"],
+  .flight-ticket [class*="rounded-lg"] {
+    border: 1px solid #d1d5db !important;
+    background: #f9fafb !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Ensure perforation indicators are visible */
+  .flight-ticket [class*="rounded-full"] {
+    border: 2px solid #000 !important;
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Optimize dashed borders */
+  .flight-ticket [class*="border-dashed"] {
+    border-color: #6b7280 !important;
+    border-width: 2px !important;
+  }
+
+  /* Prevent text from being too light */
+  .flight-ticket .text-muted-foreground {
+    color: #4b5563 !important;
+  }
+
+  /* Ensure important information is dark */
+  .flight-ticket .text-foreground,
+  .flight-ticket .font-bold,
+  .flight-ticket .font-black {
+    color: #000 !important;
+  }
+
+  /* Optimize gradients for print */
+  .flight-ticket [class*="bg-gradient"] {
+    background: #3b82f6 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Ensure shadows don't interfere */
+  .flight-ticket [class*="shadow"] {
+    box-shadow: none !important;
+  }
+
+  /* Optimize spacing for print */
+  .flight-ticket .space-y-8 {
+    gap: 0.5in !important;
+  }
+
+  .flight-ticket .p-6,
+  .flight-ticket .p-8 {
+    padding: 0.4in !important;
+  }
+
+  /* Ensure connection warnings are visible */
+  .flight-ticket [class*="bg-amber"] {
+    background: #fef3c7 !important;
+    border: 1px solid #f59e0b !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
