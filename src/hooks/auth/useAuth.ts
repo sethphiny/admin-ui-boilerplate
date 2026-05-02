@@ -16,12 +16,84 @@ export function useAuth() {
   const [loading, setLoading] = useState(false)
 
   /**
+   * Finalize login - set store, persistence and navigate
+   */
+  const completeLogin = async (account: any, accessToken: string, successMessage = 'Login successful') => {
+    // Mark login time to prevent premature token clearing
+    sessionStorage.setItem('last_login_time', Date.now().toString())
+
+    try {
+      const { setAuth } = useAuthStore.getState()
+      setAuth(account, accessToken)
+
+      // Wait for Zustand persistence to complete
+      await new Promise<void>((resolve) => {
+        const maxAttempts = 30
+        let attempts = 0
+
+        const checkPersistence = () => {
+          attempts++
+          const zustandStorage = localStorage.getItem('auth-storage')
+          const directToken = localStorage.getItem('auth_token')
+
+          // Verify both are present
+          if (zustandStorage && directToken) {
+            try {
+              const parsed = JSON.parse(zustandStorage)
+              if (parsed?.state?.token && parsed?.state?.user) {
+                resolve()
+                return
+              }
+            } catch (e) {
+              // Silently handle parsing errors
+            }
+          }
+
+          if (attempts >= maxAttempts) {
+            // Ensure direct token is at least set
+            if (!localStorage.getItem('auth_token')) {
+              localStorage.setItem('auth_token', accessToken)
+            }
+            resolve()
+            return
+          }
+
+          setTimeout(checkPersistence, 50)
+        }
+
+        // Ensure direct token is set immediately
+        localStorage.setItem('auth_token', accessToken)
+
+        // Start checking after a brief delay
+        setTimeout(checkPersistence, 100)
+      })
+
+      showSuccessToast(successMessage)
+
+      // Navigate to dashboard
+      navigate('/dashboard', { replace: true })
+    } catch (error) {
+      // Clear partial state on error
+      sessionStorage.removeItem('last_login_time')
+      localStorage.removeItem('auth_token')
+      throw error
+    }
+  }
+
+  /**
    * Step 1: Initiate login - sends OTP to email
    */
   const login = async (data: LoginDto) => {
     setLoading(true)
     try {
       const response = await authApi.login(data)
+      
+      // Bypass: If backend returns token immediately, complete login
+      if (response && response.access_token) {
+        await completeLogin(response.account, response.access_token, response.message)
+        return response
+      }
+
       return response
     } catch (error) {
       showErrorToast(error)
@@ -50,68 +122,7 @@ export function useAuth() {
 
       // Normal login flow - we have access_token
       if ('access_token' in response) {
-        const accessToken = response.access_token
-        const account = response.account
-
-        // Mark login time to prevent premature token clearing
-        sessionStorage.setItem('last_login_time', Date.now().toString())
-
-        try {
-          const { setAuth } = useAuthStore.getState()
-          setAuth(account, accessToken)
-
-          // Wait for Zustand persistence to complete
-          await new Promise<void>((resolve) => {
-            const maxAttempts = 30
-            let attempts = 0
-
-            const checkPersistence = () => {
-              attempts++
-              const zustandStorage = localStorage.getItem('auth-storage')
-              const directToken = localStorage.getItem('auth_token')
-
-              // Verify both are present
-              if (zustandStorage && directToken) {
-                try {
-                  const parsed = JSON.parse(zustandStorage)
-                  if (parsed?.state?.token && parsed?.state?.user) {
-                    resolve()
-                    return
-                  }
-                } catch (e) {
-                  // Silently handle parsing errors
-                }
-              }
-
-              if (attempts >= maxAttempts) {
-                // Ensure direct token is at least set
-                if (!localStorage.getItem('auth_token')) {
-                  localStorage.setItem('auth_token', accessToken)
-                }
-                resolve()
-                return
-              }
-
-              setTimeout(checkPersistence, 50)
-            }
-
-            // Ensure direct token is set immediately
-            localStorage.setItem('auth_token', accessToken)
-
-            // Start checking after a brief delay
-            setTimeout(checkPersistence, 100)
-          })
-
-          showSuccessToast('Login successful')
-
-          // Navigate to dashboard
-          navigate('/dashboard', { replace: true })
-        } catch (error) {
-          // Clear partial state on error
-          sessionStorage.removeItem('last_login_time')
-          localStorage.removeItem('auth_token')
-          throw error
-        }
+        await completeLogin(response.account, response.access_token)
       } else {
         throw new Error('Invalid response: missing access_token')
       }

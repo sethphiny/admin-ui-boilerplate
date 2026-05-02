@@ -1,0 +1,17 @@
+export const analyticsApi = {
+  getUserGrowth: async (_filters?: any) => ({}),
+  getTransactionVolume: async (_filters?: any) => ({}),
+  getTransactionsByType: async (_filters?: any) => ({}),
+  getRevenueTrends: async (_filters?: any) => ({}),
+  getPaymentVolume: async (_filters?: any) => ({}),
+  getPaymentsByCategory: async (_filters?: any) => ({}),
+  getBillPayments: async (_filters?: any) => ({}),
+  getFlightBookings: async (_filters?: any) => ({}),
+  getTransactionSummary: async (_filters?: any) => ({}),
+  getTransactionsByTypeSummary: async (_filters?: any) => ({}),
+  getBillPaymentTransactions: async (_filters?: any) => ({}),
+  getPaymentSummary: async (_filters?: any) => ({}),
+  getPaymentsByCategorySummary: async (_filters?: any) => ({}),
+  getBillPaymentSummary: async (_filters?: any) => ({}),
+  getComprehensiveAnalytics: async (_filters?: any) => ({}),
+}

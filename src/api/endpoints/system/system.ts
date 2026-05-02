@@ -20,6 +20,11 @@ import {
 } from '@/types/admin/system'
 
 export const systemApi = {
+  // Admin Stats
+  getStats: async (): Promise<any> => {
+    return apiClient.get<any>('/admin/stats')
+  },
+
   // System Config
   getSystemConfig: async (): Promise<FlatSystemConfig> => {
     return apiClient.get<FlatSystemConfig>('/admin/system/config')
@@ -168,6 +173,9 @@ export const systemApi = {
       `/admin/system/wallet-withdrawal-config/${walletType}/${configType}`,
       body
     )
+  },
+  updateMaintenanceExceptionEmails: async (emails: string[]): Promise<void> => {
+    return apiClient.patch('/admin/system/maintenance-exception-emails', { emails })
   },
 }
 

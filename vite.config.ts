@@ -11,9 +11,6 @@ export default defineConfig({
     },
     dedupe: ['react', 'react-dom'],
   },
-  optimizeDeps: {
-    include: ['chart.js', 'react-chartjs-2'],
-  },
   build: {
     rollupOptions: {
       output: {

@@ -24,9 +24,9 @@ export function formatRelativeTime(timestamp: string): string {
  */
 export function getStatusColor(status: ProviderHealthStatus): string {
   const colors: Record<ProviderHealthStatus, string> = {
-    HEALTHY: 'bg-green-100 text-green-800',
-    DEGRADED: 'bg-yellow-100 text-yellow-800',
-    DOWN: 'bg-red-100 text-red-800',
+    [ProviderHealthStatus.HEALTHY]: 'bg-green-100 text-green-800',
+    [ProviderHealthStatus.DEGRADED]: 'bg-yellow-100 text-yellow-800',
+    [ProviderHealthStatus.DOWN]: 'bg-red-100 text-red-800',
   }
   return colors[status] || 'bg-gray-100 text-gray-800'
 }
@@ -36,9 +36,9 @@ export function getStatusColor(status: ProviderHealthStatus): string {
  */
 export function getStatusColorHex(status: ProviderHealthStatus): string {
   const colors: Record<ProviderHealthStatus, string> = {
-    HEALTHY: '#10b981',
-    DEGRADED: '#f59e0b',
-    DOWN: '#ef4444',
+    [ProviderHealthStatus.HEALTHY]: '#10b981',
+    [ProviderHealthStatus.DEGRADED]: '#f59e0b',
+    [ProviderHealthStatus.DOWN]: '#ef4444',
   }
   return colors[status] || '#6b7280'
 }
@@ -48,9 +48,9 @@ export function getStatusColorHex(status: ProviderHealthStatus): string {
  */
 export function getStatusIcon(status: ProviderHealthStatus): string {
   const icons: Record<ProviderHealthStatus, string> = {
-    HEALTHY: '✓',
-    DEGRADED: '⚠',
-    DOWN: '✗',
+    [ProviderHealthStatus.HEALTHY]: '✓',
+    [ProviderHealthStatus.DEGRADED]: '⚠',
+    [ProviderHealthStatus.DOWN]: '✗',
   }
   return icons[status] || '?'
 }
@@ -60,9 +60,9 @@ export function getStatusIcon(status: ProviderHealthStatus): string {
  */
 export function getStatusLabel(status: ProviderHealthStatus): string {
   const labels: Record<ProviderHealthStatus, string> = {
-    HEALTHY: 'Healthy',
-    DEGRADED: 'Degraded',
-    DOWN: 'Down',
+    [ProviderHealthStatus.HEALTHY]: 'Healthy',
+    [ProviderHealthStatus.DEGRADED]: 'Degraded',
+    [ProviderHealthStatus.DOWN]: 'Down',
   }
   return labels[status] || 'Unknown'
 }
@@ -125,10 +125,11 @@ export function getStatusCodeColorClass(statusCode: number): string {
  */
 export function getTimeWindowLabel(window: TimeWindow): string {
   const labels: Record<TimeWindow, string> = {
-    '5m': '5 Minutes',
-    '1h': '1 Hour',
-    '24h': '24 Hours',
-    '30d': '30 Days',
+    [TimeWindow.M5]: '5 Minutes',
+    [TimeWindow.H1]: '1 Hour',
+    [TimeWindow.H24]: '24 Hours',
+    [TimeWindow.D30]: '30 Days',
+    [TimeWindow.D7]: '7 Days',
   }
   return labels[window]
 }

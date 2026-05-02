@@ -54,4 +54,11 @@ export const webhooksApi = {
   retryWebhook: async (webhookId: string): Promise<RetryResponse> => {
     return apiClient.post<RetryResponse>(`/admin/webhooks/${webhookId}/retry`, {})
   },
+
+  /**
+   * Get paginated list of all webhook logs (General)
+   */
+  listWebhookLogs: async (page = 1, limit = 20): Promise<any> => {
+    return apiClient.get<any>('/admin/webhooks', { params: { page, limit } })
+  },
 }

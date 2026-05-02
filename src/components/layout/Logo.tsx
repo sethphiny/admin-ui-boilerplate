@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils'
 import { Link } from 'react-router-dom'
-import { useThemeStore } from '@/stores/theme'
 
 interface LogoProps {
   className?: string
@@ -8,15 +7,6 @@ interface LogoProps {
 }
 
 export default function Logo({ className, clickable = true }: LogoProps) {
-  const { theme } = useThemeStore()
-  
-  // Base brand colors
-  // Primary accent remains vibrant in both themes
-  const orangePrimary = '#FF8C00'
-  const orangeSecondary = '#FF6600'
-  
-  // Text colors adapt to theme
-  const textColor = theme === 'dark' ? '#E5E5E5' : '#1A1A1A'
   
   const logoElement = (
     <div className={cn('flex items-center gap-2', className)}>

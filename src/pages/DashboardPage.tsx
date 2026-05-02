@@ -1,10 +1,17 @@
+import { useQuery } from '@tanstack/react-query'
+import { systemApi } from '@/api/endpoints/system/system'
 import { Card, CardContent } from '@/components/ui/card'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { useAuthStore } from '@/stores/auth'
-import { HiOutlineUsers, HiOutlineShieldCheck, HiOutlineCog6Tooth, HiOutlineClipboardDocumentList } from 'react-icons/hi2'
+import { HiOutlineUsers, HiOutlineCheckBadge, HiOutlineExclamationTriangle, HiOutlineBolt } from 'react-icons/hi2'
 
 export default function DashboardPage() {
   const { user } = useAuthStore()
+
+  const { data: statsData } = useQuery({
+    queryKey: ['admin-stats'],
+    queryFn: () => systemApi.getStats(),
+  })
 
   const getGreeting = () => {
     const hour = new Date().getHours()
@@ -15,37 +22,37 @@ export default function DashboardPage() {
 
   const getUserDisplayName = () => {
     if (!user) return 'Admin'
-    return user.firstname || 'Admin'
+    return user.name || 'Admin'
   }
 
   const stats = [
     {
-      label: 'Total Users',
-      value: '0',
+      label: 'Partners',
+      value: statsData?.partners?.total || '0',
       icon: HiOutlineUsers,
       color: 'text-blue-600',
       bgColor: 'bg-blue-100 dark:bg-blue-900/20',
     },
     {
-      label: 'Active Roles',
-      value: '0',
-      icon: HiOutlineShieldCheck,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100 dark:bg-purple-900/20',
-    },
-    {
-      label: 'System Status',
-      value: 'Online',
-      icon: HiOutlineCog6Tooth,
+      label: 'Verified KYC',
+      value: statsData?.kyc?.verified || '0',
+      icon: HiOutlineCheckBadge,
       color: 'text-emerald-600',
       bgColor: 'bg-emerald-100 dark:bg-emerald-900/20',
     },
     {
-      label: 'Logs Today',
-      value: '0',
-      icon: HiOutlineClipboardDocumentList,
+      label: 'Pending KYC',
+      value: statsData?.kyc?.pending || '0',
+      icon: HiOutlineExclamationTriangle,
       color: 'text-orange-600',
       bgColor: 'bg-orange-100 dark:bg-orange-900/20',
+    },
+    {
+      label: 'Webhook Logs',
+      value: statsData?.webhooks?.total || '0',
+      icon: HiOutlineBolt,
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-100 dark:bg-purple-900/20',
     },
   ]
 

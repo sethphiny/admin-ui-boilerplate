@@ -184,7 +184,15 @@ export default function LoginPage() {
         return
       }
 
-      await login(data)
+      const response = await login(data)
+      
+      // If OTP is bypassed (access_token returned immediately), do nothing more
+      // useAuth.login already handles navigation
+      if (response && response.access_token) {
+        setIsTransitioning(false)
+        return
+      }
+
       setEmail(data.email)
       // Store password temporarily for OTP resend (only during OTP step)
       setTempPassword(data.password)

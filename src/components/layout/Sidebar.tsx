@@ -1,6 +1,5 @@
 import { ElementType } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Badge } from '@/components/ui/badge'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,7 +12,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import Logo from '@/components/layout/Logo'
 import { HiChevronDown, HiOutlineUserCircle } from 'react-icons/hi2'
 import { cn } from '@/lib/utils'
-import { AccessLevel } from '@/types/permissions/permissions'
+import { AccessLevel } from '@/types/auth/permissions'
 import { User } from '@/types/auth/auth'
 
 export interface NavItem {
@@ -36,7 +35,6 @@ interface SidebarProps {
     shouldBeExpanded: (item: NavItem) => boolean
     user: User | null
 }
-
 export function Sidebar({
     sidebarOpen,
     sidebarCollapsed,
@@ -46,7 +44,6 @@ export function Sidebar({
     toggleExpanded,
     isItemOrChildActive,
     shouldBeExpanded,
-    user,
 }: SidebarProps) {
     const location = useLocation()
 

@@ -4,22 +4,13 @@ import { useAuthStore } from '@/stores/auth'
 import { usePermissions } from '@/hooks/permissions/usePermissions'
 import { Sidebar, NavItem } from '@/components/layout/Sidebar'
 import { Header } from '@/components/layout/Header'
-import { AccessLevel } from '@/types/permissions/permissions'
+import { AccessLevel } from '@/types/auth/permissions'
 import {
   HiOutlineSquares2X2,
   HiOutlineUsers,
   HiOutlineShieldCheck,
-  HiOutlineCog6Tooth,
   HiOutlineClipboardDocumentList,
-  HiOutlineServer,
-  HiOutlineKey,
-  HiOutlineArrowPath,
-  HiOutlineBell,
-  HiOutlineMegaphone,
   HiOutlineGlobeAlt,
-  HiOutlineShieldExclamation,
-  HiOutlineAdjustmentsHorizontal,
-  HiOutlinePaperAirplane,
 } from 'react-icons/hi2'
 import { cn } from '@/lib/utils'
 
@@ -32,105 +23,40 @@ const navItems: NavItem[] = [
     accessLevel: AccessLevel.READ,
   },
   {
-    label: 'Users',
-    href: '/users',
+    label: 'Partners',
+    href: '/partners',
     icon: HiOutlineUsers,
-    module: 'user',
+    module: 'partner',
     accessLevel: AccessLevel.READ,
   },
   {
-    label: 'RBAC',
+    label: 'KYC Sessions',
+    href: '/kyc',
     icon: HiOutlineShieldCheck,
-    module: 'role',
+    module: 'kyc',
     accessLevel: AccessLevel.READ,
-    children: [
-      {
-        label: 'Roles',
-        href: '/rbac/roles',
-        icon: HiOutlineShieldExclamation,
-        module: 'role',
-        accessLevel: AccessLevel.READ,
-      },
-      {
-        label: 'Permissions',
-        href: '/rbac/permissions',
-        icon: HiOutlineKey,
-        module: 'permission',
-        accessLevel: AccessLevel.READ,
-      },
-    ],
-  },
-  {
-    label: 'Admins',
-    href: '/admins',
-    icon: HiOutlineUsers,
-    module: 'admin',
-    accessLevel: AccessLevel.READ,
-  },
-  {
-    label: 'System',
-    icon: HiOutlineCog6Tooth,
-    module: 'system',
-    accessLevel: AccessLevel.READ,
-    children: [
-      {
-        label: 'Configuration',
-        href: '/system/config',
-        icon: HiOutlineAdjustmentsHorizontal,
-        module: 'system',
-        accessLevel: AccessLevel.READ,
-      },
-      {
-        label: 'Worker Monitoring',
-        href: '/workers',
-        icon: HiOutlineServer,
-        module: 'system',
-        accessLevel: AccessLevel.READ,
-      },
-      {
-        label: 'Queues',
-        href: '/queues',
-        icon: HiOutlineArrowPath,
-        module: 'system',
-        accessLevel: AccessLevel.READ,
-      },
-    ],
-  },
-  {
-    label: 'Activity Logs',
-    href: '/activity',
-    icon: HiOutlineClipboardDocumentList,
-    module: 'activity',
-    accessLevel: AccessLevel.READ,
-  },
-  {
-    label: 'Notifications',
-    icon: HiOutlineBell,
-    module: 'notification',
-    accessLevel: AccessLevel.READ,
-    children: [
-      {
-        label: 'Send Notification',
-        href: '/notifications/send',
-        icon: HiOutlinePaperAirplane,
-        module: 'notification',
-        accessLevel: AccessLevel.READ,
-      },
-      {
-        label: 'Broadcast',
-        href: '/notifications/broadcast',
-        icon: HiOutlineMegaphone,
-        module: 'notification',
-        accessLevel: AccessLevel.READ,
-      },
-    ],
   },
   {
     label: 'Webhooks',
-    href: '/webhooks',
     icon: HiOutlineGlobeAlt,
     module: 'webhook',
     accessLevel: AccessLevel.READ,
+    children: [
+      {
+        label: 'Stats (Providers)',
+        href: '/webhooks',
+        icon: HiOutlineSquares2X2,
+        module: 'webhook',
+        accessLevel: AccessLevel.READ,
+      },
+      {
+        label: 'Logs (Incoming)',
+        href: '/webhook-logs',
+        icon: HiOutlineClipboardDocumentList,
+        module: 'webhook',
+        accessLevel: AccessLevel.READ,
+      },
+    ],
   },
 ]
 

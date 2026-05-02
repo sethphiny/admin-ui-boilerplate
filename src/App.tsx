@@ -15,44 +15,20 @@ import Preloader from './components/misc/Preloader'
 const DashboardPage = lazy(() => import('./pages/DashboardPage'))
 
 
-// Users
-const UsersPage = lazy(() => import('./pages/users/UsersPage'))
-const UserDetailPage = lazy(() => import('./pages/users/UserDetailPage'))
+// Partners
+const PartnersPage = lazy(() => import('./pages/partners/PartnersPage'))
+
+// KYC
+const KycSessionsPage = lazy(() => import('./pages/kyc/KycSessionsPage'))
 
 
 
 
-
-
-// RBAC
-const RolesPage = lazy(() => import('./pages/rbac/RolesPage'))
-const RoleDetailPage = lazy(() => import('./pages/rbac/RoleDetailPage'))
-const PermissionsPage = lazy(() => import('./pages/rbac/PermissionsPage'))
-
-
-// Admins
-const AdminsPage = lazy(() => import('./pages/admins/AdminsPage'))
-const AdminDetailPage = lazy(() => import('./pages/admins/AdminDetailPage'))
-
-// System
-const SystemConfigPage = lazy(() => import('./pages/system/SystemConfigPage'))
-
-// Activity
-const ActivityLogsPage = lazy(() => import('./pages/activity/ActivityLogsPage'))
-const ActivityLogDetailPage = lazy(() => import('./pages/activity/ActivityLogDetailPage'))
-
-// Notifications
-const SendNotificationPage = lazy(() => import('./pages/notifications/SendNotificationPage'))
-const BroadcastNotificationPage = lazy(() => import('./pages/notifications/BroadcastNotificationPage'))
 
 
 // Webhooks
 const WebhooksPage = lazy(() => import('./pages/webhooks/WebhooksPage'))
-
-// Workers
-const WorkersPage = lazy(() => import('./pages/workers/WorkersPage'))
-const WorkerDetailPage = lazy(() => import('./pages/workers/WorkerDetailPage'))
-const QueuesPage = lazy(() => import('./pages/workers/QueuesPage'))
+const WebhookLogsPage = lazy(() => import('./pages/webhooks/WebhookLogsPage'))
 
 
 function App() {
@@ -76,44 +52,15 @@ function App() {
             <Route path="dashboard" element={<LazyRoute><DashboardPage /></LazyRoute>} />
 
 
-            {/* Users */}
-            <Route path="users" element={<LazyRoute><UsersPage /></LazyRoute>} />
-            <Route path="users/:id" element={<LazyRoute><UserDetailPage /></LazyRoute>} />
+            {/* Partners */}
+            <Route path="partners" element={<LazyRoute><PartnersPage /></LazyRoute>} />
 
-
-
-
-
-
-            {/* RBAC */}
-            <Route path="rbac/roles" element={<LazyRoute><RolesPage /></LazyRoute>} />
-            <Route path="rbac/roles/:id" element={<LazyRoute><RoleDetailPage /></LazyRoute>} />
-            <Route path="rbac/permissions" element={<LazyRoute><PermissionsPage /></LazyRoute>} />
-
-
-            {/* Admins */}
-            <Route path="admins" element={<LazyRoute><AdminsPage /></LazyRoute>} />
-            <Route path="admins/:id" element={<LazyRoute><AdminDetailPage /></LazyRoute>} />
-
-            {/* System */}
-            <Route path="system/config" element={<LazyRoute><SystemConfigPage /></LazyRoute>} />
-
-            {/* Activity */}
-            <Route path="activity" element={<LazyRoute><ActivityLogsPage /></LazyRoute>} />
-            <Route path="activity/:type/:id" element={<LazyRoute><ActivityLogDetailPage /></LazyRoute>} />
-
-            {/* Notifications */}
-            <Route path="notifications/send" element={<LazyRoute><SendNotificationPage /></LazyRoute>} />
-            <Route path="notifications/broadcast" element={<LazyRoute><BroadcastNotificationPage /></LazyRoute>} />
-
+            {/* KYC */}
+            <Route path="kyc" element={<LazyRoute><KycSessionsPage /></LazyRoute>} />
 
             {/* Webhooks */}
             <Route path="webhooks" element={<LazyRoute><WebhooksPage /></LazyRoute>} />
-
-            {/* Workers */}
-            <Route path="workers" element={<LazyRoute><WorkersPage /></LazyRoute>} />
-            <Route path="workers/:name" element={<LazyRoute><WorkerDetailPage /></LazyRoute>} />
-            <Route path="queues" element={<LazyRoute><QueuesPage /></LazyRoute>} />
+            <Route path="webhook-logs" element={<LazyRoute><WebhookLogsPage /></LazyRoute>} />
 
           </Route>
 

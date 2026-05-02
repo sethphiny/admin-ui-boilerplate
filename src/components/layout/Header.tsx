@@ -19,7 +19,6 @@ import {
     HiOutlineUserCircle,
     HiOutlineArrowRightOnRectangle,
 } from 'react-icons/hi2'
-import { cn } from '@/lib/utils'
 
 interface HeaderProps {
     sidebarOpen: boolean
@@ -40,11 +39,12 @@ export function Header({
 }: HeaderProps) {
     const getInitials = (user: User | null) => {
         if (!user) return 'AD'
-        if (user.firstname && user.lastname) {
-            return `${user.firstname[0]}${user.lastname[0]}`.toUpperCase()
-        }
-        if (user.firstname) {
-            return user.firstname.slice(0, 2).toUpperCase()
+        if (user.name) {
+            const parts = user.name.split(' ')
+            if (parts.length >= 2) {
+                return `${parts[0][0]}${parts[1][0]}`.toUpperCase()
+            }
+            return user.name.slice(0, 2).toUpperCase()
         }
         if (user.email) {
             return user.email.slice(0, 2).toUpperCase()
@@ -54,18 +54,12 @@ export function Header({
 
     const getUserDisplayName = (user: User | null) => {
         if (!user) return 'Admin'
-        if (user.firstname && user.lastname) {
-            return `${user.firstname} ${user.lastname}`
-        }
-        if (user.firstname) {
-            return user.firstname
-        }
-        return user.email
+        return user.name || user.email
     }
 
     const getUserRoleName = (user: User | null) => {
         if (!user) return ''
-        const roleName = typeof user.role === 'string' ? user.role : user.role?.name || ''
+        const roleName = user.role || ''
         return roleName.replace(/_/g, ' ')
     }
 

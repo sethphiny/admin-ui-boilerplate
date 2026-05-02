@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/stores/auth'
-import { AccessLevel } from '@/types/permissions/permissions'
+import { AccessLevel } from '@/types/auth/permissions'
 import { useCurrentAdminPermissions } from '../admin/useCurrentAdminPermissions'
 
 /**

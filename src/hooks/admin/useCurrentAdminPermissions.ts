@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useAuthStore } from '@/stores/auth'
-import { AccessLevel } from '@/types/permissions/permissions'
+import { AccessLevel } from '@/types/auth/permissions'
 
 /**
  * Hook to extract and map the current user's permissions from User.role.permissions
@@ -9,62 +9,29 @@ import { AccessLevel } from '@/types/permissions/permissions'
 export function useCurrentAdminPermissions() {
   const { user } = useAuthStore()
 
-  // Map resource.action permissions to module names with access levels
+  // Map Admin roles to access levels
   const { permissionMap, isSuperAdmin } = useMemo(() => {
     const map = new Map<string, AccessLevel>()
     let superAdmin = false
 
-    if (!user?.role) {
+    if (!user) {
       return { permissionMap: map, isSuperAdmin: false }
     }
 
-    // Check if user is super admin
-    const roleName = typeof user.role === 'string' ? user.role : user.role.name
-    superAdmin = roleName === 'SUPER_ADMIN' || roleName === 'SUPERADMIN'
+    const role = (user as any).role as string
+    superAdmin = role === 'SUPER_ADMIN'
 
-    // Extract permissions from user.role.permissions
-    const permissions = typeof user.role === 'object' ? user.role.permissions : []
-
-    if (permissions && Array.isArray(permissions)) {
-      permissions.forEach((permission) => {
-        // Permission format: { resource: "user", action: "read" }
-        const resource = permission.resource?.toLowerCase()
-        const action = permission.action?.toLowerCase()
-
-        if (!resource) return
-
-        // Map actions to access levels
-        // Read actions: read, view, list, get
-        // Write actions: create, update, delete, suspend, activate, freeze, credit, etc.
-        const isReadAction = ['read', 'view', 'list', 'get'].includes(action)
-        const isWriteAction = [
-          'create',
-          'update',
-          'delete',
-          'suspend',
-          'activate',
-          'freeze',
-          'unfreeze',
-          'credit',
-          'debit',
-          'approve',
-          'reject',
-          'reverse',
-          'refund',
-        ].includes(action)
-
-        if (isReadAction) {
-          // Set READ if not already set, or upgrade to WRITE if write action exists
-          const current = map.get(resource)
-          if (!current || current === AccessLevel.NONE) {
-            map.set(resource, AccessLevel.READ)
-          }
-        } else if (isWriteAction) {
-          // Write actions always set WRITE level
-          map.set(resource, AccessLevel.WRITE)
-        }
-      })
-    }
+    // Define broad permissions based on role
+    // For now, ADMIN has WRITE for everything, VIEWER has READ for everything
+    const modules = ['partner', 'kyc', 'webhook', 'dashboard']
+    
+    modules.forEach(module => {
+      if (role === 'SUPER_ADMIN' || role === 'ADMIN') {
+        map.set(module, AccessLevel.WRITE)
+      } else if (role === 'VIEWER') {
+        map.set(module, AccessLevel.READ)
+      }
+    })
 
     return { permissionMap: map, isSuperAdmin: superAdmin }
   }, [user])

@@ -56,7 +56,7 @@ export function MaintenanceExceptionEmails({
     usersData?.data?.map((user: User) => ({
       value: user.email.toLowerCase(),
       label: user.email,
-      description: `${user.firstname || ''} ${user.lastname || ''}`.trim() || 'No name',
+      description: user.name || 'No name',
     })) || []
 
   // Add manual entry option if search query looks like an email but not in results

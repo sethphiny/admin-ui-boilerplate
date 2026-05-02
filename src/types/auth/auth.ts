@@ -1,16 +1,9 @@
-import { AdminRolePermission as Permission } from '../permissions/permissions'
-
 // Admin User type matching API response
 export interface User {
   id: string
   email: string
-  firstname: string
-  lastname: string
-  role: {
-    id: string
-    name: string
-    permissions: Permission[]
-  }
+  name: string
+  role: string
   isActive?: boolean
   createdAt?: string
   lastLoginAt?: string
@@ -22,10 +15,12 @@ export interface LoginDto {
   password: string
 }
 
-// Login Response (Step 1 - OTP sent)
-// API returns data directly
+// Login Response (Supports both OTP and OTP Bypass flows)
 export interface LoginResponse {
-  requiresPasswordChange: boolean
+  requiresPasswordChange?: boolean
+  access_token?: string
+  account?: User
+  message?: string
 }
 
 // Verify OTP DTO
