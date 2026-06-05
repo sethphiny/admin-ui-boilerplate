@@ -17,6 +17,17 @@ export interface KycSession {
   rejectionReason?: string;
   createdOn: string;
   updatedOn: string;
+  kycData?: {
+    id: string;
+    sessionId: string;
+    companyData: any;
+    directorsData: any;
+    idCards?: any;
+    bvn?: string;
+    isBvnVerified?: boolean;
+    createdOn: string;
+    updatedOn: string;
+  };
 }
 
 export interface KycSessionsResponse {

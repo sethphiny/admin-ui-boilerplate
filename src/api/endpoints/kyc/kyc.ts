@@ -19,4 +19,12 @@ export const kycApi = {
   rejectSession: async (id: string, reason: string): Promise<void> => {
     return apiClient.post(`/admin/kyc/reject/${id}`, { reason })
   },
+
+  deleteSession: async (id: string): Promise<void> => {
+    return apiClient.delete(`/admin/kyc/sessions/${id}`)
+  },
+
+  batchDeleteSessions: async (ids: string[]): Promise<void> => {
+    return apiClient.post('/admin/kyc/sessions/batch-delete', { ids })
+  },
 }

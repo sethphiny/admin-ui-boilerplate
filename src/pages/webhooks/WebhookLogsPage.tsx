@@ -88,7 +88,7 @@ export default function WebhookLogsPage() {
               <DialogTitle>Webhook Payload</DialogTitle>
             </DialogHeader>
             <div className="bg-muted p-4 rounded-md overflow-auto max-h-[400px]">
-              <pre className="text-xs font-mono">
+              <pre className="text-xs font-mono whitespace-pre-wrap break-all">
                 {JSON.stringify(row.payload, null, 2)}
               </pre>
             </div>
@@ -96,7 +96,7 @@ export default function WebhookLogsPage() {
               <div className="mt-4">
                 <h4 className="text-sm font-semibold mb-2">Last Response</h4>
                 <div className="bg-muted p-4 rounded-md overflow-auto max-h-[200px]">
-                  <pre className="text-xs font-mono">{row.lastResponse}</pre>
+                  <pre className="text-xs font-mono whitespace-pre-wrap break-all">{row.lastResponse}</pre>
                 </div>
               </div>
             )}

@@ -9,7 +9,6 @@ import {
   HiOutlineSquares2X2,
   HiOutlineUsers,
   HiOutlineShieldCheck,
-  HiOutlineClipboardDocumentList,
   HiOutlineGlobeAlt,
 } from 'react-icons/hi2'
 import { cn } from '@/lib/utils'
@@ -37,26 +36,11 @@ const navItems: NavItem[] = [
     accessLevel: AccessLevel.READ,
   },
   {
-    label: 'Webhooks',
+    label: 'Webhook Logs',
+    href: '/webhook-logs',
     icon: HiOutlineGlobeAlt,
     module: 'webhook',
     accessLevel: AccessLevel.READ,
-    children: [
-      {
-        label: 'Stats (Providers)',
-        href: '/webhooks',
-        icon: HiOutlineSquares2X2,
-        module: 'webhook',
-        accessLevel: AccessLevel.READ,
-      },
-      {
-        label: 'Logs (Incoming)',
-        href: '/webhook-logs',
-        icon: HiOutlineClipboardDocumentList,
-        module: 'webhook',
-        accessLevel: AccessLevel.READ,
-      },
-    ],
   },
 ]
 
